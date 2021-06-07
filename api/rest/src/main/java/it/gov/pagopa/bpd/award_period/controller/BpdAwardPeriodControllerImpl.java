@@ -4,7 +4,6 @@ import eu.sia.meda.core.controller.StatelessController;
 import it.gov.pagopa.bpd.award_period.assembler.AwardPeriodResourceAssembler;
 import it.gov.pagopa.bpd.award_period.connector.jpa.model.AwardPeriod;
 import it.gov.pagopa.bpd.award_period.model.AwardPeriodResource;
-import it.gov.pagopa.bpd.award_period.model.AwardPeriodServiceModel;
 import it.gov.pagopa.bpd.award_period.service.AwardPeriodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,12 +35,12 @@ class BpdAwardPeriodControllerImpl extends StatelessController implements BpdAwa
             logger.debug("awardPeriodId = [" + awardPeriodId + "]");
         }
 
-        final AwardPeriodServiceModel awardPeriod = awardPeriodService.find(awardPeriodId);
-        return awardPeriodResourceAssembler.toResource(awardPeriod);
+        final AwardPeriod awardPeriod = awardPeriodService.find(awardPeriodId);
+        return awardPeriodResourceAssembler.toResource(awardPeriod,null);
     }
 
     @Override
-    public List<AwardPeriodResource> findAll(OffsetDateTime offsetDateTime) {
+    public List<AwardPeriodResource> findAll(OffsetDateTime offsetDateTime, Integer version) {
         if (logger.isDebugEnabled()) {
             logger.debug("BpdAwardPeriodControllerImpl.findAll");
             logger.debug("offsetDateTime = [" + offsetDateTime + "]");
@@ -52,9 +51,9 @@ class BpdAwardPeriodControllerImpl extends StatelessController implements BpdAwa
             offsetDate = offsetDateTime.toLocalDate();
         }
 
-        List<AwardPeriodServiceModel> awardPeriods = awardPeriodService.findAll(offsetDate);
+        List<AwardPeriod> awardPeriods = awardPeriodService.findAll(offsetDate);
         return awardPeriods.stream()
-                .map(awardPeriodResourceAssembler::toResource)
+                .map(aw -> awardPeriodResourceAssembler.toResource(aw,version))
                 .collect(Collectors.toList());
     }
 
@@ -64,9 +63,9 @@ class BpdAwardPeriodControllerImpl extends StatelessController implements BpdAwa
             logger.debug("BpdAwardPeriodControllerImpl.findActiveAwardPeriods");
         }
 
-        List<AwardPeriodServiceModel> awardPeriods = awardPeriodService.findActiveAwardPeriods();
+        List<AwardPeriod> awardPeriods = awardPeriodService.findActiveAwardPeriods();
         return awardPeriods.stream()
-                .map(awardPeriodResourceAssembler::toResource)
+                .map(aw -> awardPeriodResourceAssembler.toResource(aw,null))
                 .collect(Collectors.toList());
     }
 

@@ -1,10 +1,8 @@
 package it.gov.pagopa.bpd.award_period.service;
 
-import it.gov.pagopa.bpd.award_period.assembler.AwardPeriodServiceModelAssembler;
 import it.gov.pagopa.bpd.award_period.connector.jpa.AwardPeriodDAO;
 import it.gov.pagopa.bpd.award_period.connector.jpa.model.AwardPeriod;
 import it.gov.pagopa.bpd.award_period.exception.AwardPeriodNotFoundException;
-import it.gov.pagopa.bpd.award_period.model.AwardPeriodServiceModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -33,9 +31,6 @@ public class AwardPeriodServiceImplTest {
 
     @MockBean
     private AwardPeriodDAO awardPeriodDAOMock;
-
-    @SpyBean
-    private AwardPeriodServiceModelAssembler awardPeriodServiceModelAssembler;
 
     @Autowired
     private AwardPeriodServiceImpl awardPeriodService;
@@ -98,11 +93,10 @@ public class AwardPeriodServiceImplTest {
     @Test
     public void find() {
 
-        final AwardPeriodServiceModel found = awardPeriodService.find(EXISTING_AWARD_PERIOD);
+        final AwardPeriod found = awardPeriodService.find(EXISTING_AWARD_PERIOD);
 
         verify(awardPeriodDAOMock, only()).findById(eq(EXISTING_AWARD_PERIOD));
         verify(awardPeriodDAOMock, times(1)).findById(eq(EXISTING_AWARD_PERIOD));
-        verify(awardPeriodServiceModelAssembler).toResource(Mockito.any(AwardPeriod.class));
         assertEquals(EXISTING_AWARD_PERIOD, found.getAwardPeriodId());
         assertNotNull(found.getAwardPeriodId());
     }
@@ -110,43 +104,38 @@ public class AwardPeriodServiceImplTest {
     @Test(expected = AwardPeriodNotFoundException.class)
     public void find_KO() {
 
-        final AwardPeriodServiceModel found = awardPeriodService.find(NOT_EXISTING_AWARD_PERIOD);
+        final AwardPeriod found = awardPeriodService.find(NOT_EXISTING_AWARD_PERIOD);
 
         verify(awardPeriodDAOMock, only()).findById(eq(NOT_EXISTING_AWARD_PERIOD));
         verify(awardPeriodDAOMock, times(1)).findById(eq(NOT_EXISTING_AWARD_PERIOD));
-        verifyZeroInteractions(awardPeriodServiceModelAssembler);
     }
 
     @Test
     public void findAll_offsetDateNotSpecified() {
 
-        final List<AwardPeriodServiceModel> founds = awardPeriodService.findAll(null);
+        final List<AwardPeriod> founds = awardPeriodService.findAll(null);
 
         verify(awardPeriodDAOMock, only()).findAll();
         verify(awardPeriodDAOMock, times(1)).findAll();
-        verify(awardPeriodServiceModelAssembler).toResource(Mockito.any(AwardPeriod.class));
         assertNotNull(founds);
     }
 
     @Test
     public void findAll_offsetDateSpecified() {
 
-
-        final List<AwardPeriodServiceModel> founds = awardPeriodService.findAll(LocalDate.now());
+        final List<AwardPeriod> founds = awardPeriodService.findAll(LocalDate.now());
 
         verify(awardPeriodDAOMock, only()).findAll(Mockito.any(Specification.class));
         verify(awardPeriodDAOMock, times(1)).findAll(Mockito.any(Specification.class));
-        verify(awardPeriodServiceModelAssembler).toResource(Mockito.any(AwardPeriod.class));
         assertNotNull(founds);
     }
 
     @Test
     public void findActiveAwardPeriods() {
-        final List<AwardPeriodServiceModel> founds = awardPeriodService.findActiveAwardPeriods();
+        final List<AwardPeriod> founds = awardPeriodService.findActiveAwardPeriods();
 
         verify(awardPeriodDAOMock, only()).findActiveAwardPeriods();
         verify(awardPeriodDAOMock, times(1)).findActiveAwardPeriods();
-        verify(awardPeriodServiceModelAssembler).toResource(Mockito.any(AwardPeriod.class));
         assertNotNull(founds);
     }
 

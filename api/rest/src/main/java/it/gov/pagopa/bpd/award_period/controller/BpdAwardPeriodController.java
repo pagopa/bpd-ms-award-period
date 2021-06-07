@@ -31,7 +31,10 @@ public interface BpdAwardPeriodController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(HttpStatus.OK)
     List<AwardPeriodResource> findAll(@RequestParam(value = "offsetDateTime", required = false)
-                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime offsetDateTime);
+                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime offsetDateTime,
+                                      @RequestParam(value="version", required=false, defaultValue = "1")
+                                      Integer version
+    );
 
 
     @GetMapping(value = "/actives", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
