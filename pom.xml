@@ -8,7 +8,7 @@
     </parent>
 
     <artifactId>bpd-ms-award-period</artifactId>
-    <version>1.1.0-rc1</version>
+    <version>1.1.0</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -20,7 +20,7 @@
             <dependency>
                 <groupId>it.gov.pagopa.bpd.ms.award_period.integration</groupId>
                 <artifactId>bpd-ms-award-period-integration-jpa</artifactId>
-                <version>1.1.0-rc1</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>it.gov.pagopa.bpd.ms.award_period.integration</groupId>
@@ -35,12 +35,12 @@
             <dependency>
                 <groupId>it.gov.pagopa.bpd.ms.award_period</groupId>
                 <artifactId>bpd-ms-award-period-core</artifactId>
-                <version>1.1.0-rc1</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>it.gov.pagopa.bpd.ms.award_period.api</groupId>
                 <artifactId>bpd-ms-award-period-api-rest</artifactId>
-                <version>1.1.0-rc1</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>it.gov.pagopa.bpd.commons</groupId>
