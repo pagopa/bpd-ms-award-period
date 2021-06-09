@@ -34,3 +34,6 @@ meda:
 logging:
   level:
     it.gov.pagopa.bpd.award_period: ${LOG_LEVEL_BPD_AWARD_PERIOD:DEBUG}
+    com.zaxxer.hikari.HikariConfig: ${LOG_LEVEL_BPD_AWARD_PERIOD_DATASOURCE_POOL_CONFIG:OFF}
+    com.zaxxer.hikari.pool.HikariPool: ${LOG_LEVEL_BPD_AWARD_PERIOD_DATASOURCE_POOL:OFF}
+    org.hibernate: ${LOG_LEVEL_BPD_AWARD_PERIOD_HIBERNATE:INFO}
