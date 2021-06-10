@@ -37,7 +37,7 @@ steps:
     displayName: Build and Test
     inputs:
       mavenPomFile: 'pom.xml'
-      goals: 'clean verify sonar:sonar'
+      goals: 'clean test sonar:sonar'
       options: '-DaltDeploymentRepository=cstar::default::https://pkgs.dev.azure.com/pagopaspa/cstar-projects/_packaging/cstar/maven/v1'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
