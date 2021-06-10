@@ -37,12 +37,12 @@ steps:
     displayName: Build and Test
     inputs:
       mavenPomFile: 'pom.xml'
-      goals: 'clean test sonar:sonar'
+      goals: 'clean verify sonar:sonar'
       options: '-DaltDeploymentRepository=cstar::default::https://pkgs.dev.azure.com/pagopaspa/cstar-projects/_packaging/cstar/maven/v1'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       codeCoverageToolOption: 'JaCoCo'
-      codeCoverageClassFilter: '+:eu.sia.meda.**,-:**.*Config,-:**.*Scheduler,-:**.Dummy*,-:**.model.**,-:**.enums.**,-:**.*Constants,-:**.*Application,-:**.*Test,-:**.*Test.**,-:**Base*.**,-:ErrorManagerService.java'
+      codeCoverageClassFilter: '+:it.gov.pagopa.**,-:**.*Config,-:**.*Scheduler,-:**.Dummy*,-:**.model.**,-:**.enums.**,-:**.*Constants,-:**.*Application,-:**.*Test,-:**.*Test.**,-:**Base*.**,-:ErrorManagerService.java'
       javaHomeOption: 'JDKVersion'
       jdkVersionOption: '1.11'
       jdkArchitectureOption: 'x64'
@@ -61,7 +61,6 @@ steps:
       script: |
         cd $(System.DefaultWorkingDirectory) | ls -lR
       failOnStderr: true
-  - task: SonarCloudAnalyze@1
   - task: SonarCloudPublish@1
     displayName: 'Publish SonarCloud results on build summary'
     inputs:
