@@ -31,14 +31,14 @@ steps:
       extraProperties: |
         sonar.projectKey=$(SONARCLOUD_PROJECT_KEY)
         sonar.projectName=$(SONARCLOUD_PROJECT_NAME)
-        sonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-        sonar.junit.reportPaths=target/surefire-reports/
+#        sonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+#        sonar.junit.reportPaths=target/surefire-reports/
   - task: Maven@3
     displayName: Build and Test
     inputs:
       mavenPomFile: 'pom.xml'
-      goals: 'clean test org.jacoco:jacoco-maven-plugin:report sonar:sonar'
-      options: '-DaltDeploymentRepository=cstar::default::https://pkgs.dev.azure.com/pagopaspa/cstar-projects/_packaging/cstar/maven/v1'
+      goals: 'clean verify org.jacoco:jacoco-maven-plugin:report-aggregate'
+      options: '-DaltDeploymentRepository=cstar::default::https://pkgs.dev.azure.com/pagopaspa/cstar-projects/_packaging/cstar/maven/v1 -Daggregate.report.dir=${basedir}/target/site/jacoco-aggregate/jacoco.xml -Dsonar.coverage.jacoco.xmlReportPaths=${aggregate.report.dir}'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       codeCoverageToolOption: 'JaCoCo'
