@@ -38,7 +38,7 @@ steps:
     inputs:
       mavenPomFile: 'pom.xml'
       goals: 'clean verify'
-      options: '-DaltDeploymentRepository=cstar::default::https://pkgs.dev.azure.com/pagopaspa/cstar-projects/_packaging/cstar/maven/v1'
+      options: '-DaltDeploymentRepository=cstar::default::https://pkgs.dev.azure.com/pagopaspa/cstar-projects/_packaging/cstar/maven/v1 -X'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       codeCoverageToolOption: 'JaCoCo'
@@ -67,7 +67,7 @@ steps:
     inputs:
       targetType: 'inline'
       script: |
-        cat /home/vsts/work/1/s/CCReport43F6D5EF/jacoco.xml
+        cat $(System.DefaultWorkingDirectory)/CCReport43F6D5EF/jacoco.xml
       failOnStderr: true
   - task: SonarCloudPublish@1
     displayName: 'Publish SonarCloud results on build summary'
