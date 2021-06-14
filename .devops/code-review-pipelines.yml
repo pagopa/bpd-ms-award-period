@@ -36,7 +36,8 @@ steps:
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
-      goals: 'clean org.jacoco:jacoco-maven-plugin:prepare-agent verify org.jacoco:jacoco-maven-plugin:report'
+      goals: 'clean org.jacoco:jacoco-maven-plugin:prepare-agent verify org.jacoco:jacoco-maven-plugin:report '
+      options: '-Dmaven.test.failure.ignore=true -Dsonar.exclusions=**/src/java/test/**'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       javaHomeOption: 'JDKVersion'
@@ -54,4 +55,6 @@ steps:
       script: |
         cd $(System.DefaultWorkingDirectory) | ls -lR
       failOnStderr: true
-
+  - task: SonarCloudPublish@1
+    inputs:
+      pollingTimeoutSec: '300'
