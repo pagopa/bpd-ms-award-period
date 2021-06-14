@@ -31,7 +31,7 @@ steps:
       extraProperties: |
         sonar.projectKey=$(SONARCLOUD_PROJECT_KEY)
         sonar.projectName=$(SONARCLOUD_PROJECT_NAME)
-        sonar.exclusions='**/enums/**, **/model/**, **/*Constants*.java, **/*Config.java,**/*Scheduler.java, **/*Application.java,**/*Test.java,**/Dummy*.java'
+        sonar.exclusions='**/enums/**, **/model/**, **/*Constants*.java, **/*Config.java, **/*Scheduler.java, **/*Application.java, **/*Test.java, **/Dummy*.java'
         sonar.language='java'
         sonar.java.coveragePlugin='jacoco'
 #        sonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
