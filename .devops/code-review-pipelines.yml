@@ -33,6 +33,19 @@ steps:
         sonar.projectName=$(SONARCLOUD_PROJECT_NAME)
 #        sonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 #        sonar.junit.reportPaths=target/surefire-reports/
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean verify org.jacoco:jacoco-maven-plugin:report'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: true
+    isJacocoCoverageReportXML: true
+    sqMavenPluginVersionChoice: 'latest'
   - task: Bash@3
     displayName: Bash
     name: Bash
