@@ -37,7 +37,7 @@ steps:
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
-      goals: 'clean org.jacoco:jacoco-maven-plugin:prepare-agent verify org.jacoco:jacoco-maven-plugin:report '
+      goals: 'clean org.jacoco:jacoco-maven-plugin:prepare-agent verify org.jacoco:jacoco-maven-plugin:report org.jacoco:jacoco-maven-plugin:report-aggregate '
       options: '-Dmaven.test.failure.ignore=true'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
@@ -45,8 +45,19 @@ steps:
       mavenVersionOption: 'Default'
       mavenAuthenticateFeed: false
       effectivePomSkip: false
+      sonarQubeRunAnalysis: false
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'sonar:sonar'
+      options: '-Dsonar.coverage.jacoco.xmlReportPaths=$(find "$(pwd)" -path "*jacoco.xml" | sed "s/.*/&/" | tr "\n" ",")'
+      publishJUnitResults: false
+      javaHomeOption: 'JDKVersion'
+      mavenVersionOption: 'Default'
+      mavenAuthenticateFeed: false
+      effectivePomSkip: false
       sonarQubeRunAnalysis: true
-      isJacocoCoverageReportXML: true
+      isJacocoCoverageReportXML: false
       sqMavenPluginVersionChoice: 'latest'
 #  - task: Bash@3
 #    displayName: Bash
