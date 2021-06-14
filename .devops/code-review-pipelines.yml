@@ -31,6 +31,7 @@ steps:
       extraProperties: |
         sonar.projectKey=$(SONARCLOUD_PROJECT_KEY)
         sonar.projectName=$(SONARCLOUD_PROJECT_NAME)
+        sonar.exclusion='**.*Config,**.*Scheduler,**.Dummy*,**.model.**,**.enums.**,**.*Constants,**.*Application,**.*Test,**.*Test.**,**Base*.**,ErrorManagerService.java'
 #        sonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 #        sonar.junit.reportPaths=target/surefire-reports/
   - task: Maven@3
@@ -40,7 +41,6 @@ steps:
       options: '-Dmaven.test.failure.ignore=true'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      codeCoverageToolOption: 'JaCoCo'
       javaHomeOption: 'JDKVersion'
       mavenVersionOption: 'Default'
       mavenAuthenticateFeed: false
