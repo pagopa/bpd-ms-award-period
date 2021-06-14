@@ -44,7 +44,7 @@ steps:
 #      mavenAuthenticateFeed: false
 #      effectivePomSkip: false
 #      sonarQubeRunAnalysis: false
-  - bash: xmlReportPaths=$(find "$(pwd)" -path '*.java' | sed 's/.*/&/' | tr '\n' ','); echo $(xmlReportPaths); echo "##vso[task.setvariable variable=xmlReportPaths;isOutput=true]$xmlReportPaths"
+  - bash: xmlReportPaths=$(find "$(pwd)" -path '*.java' | sed 's/.*/&/' | tr '\n' ','); echo "echoing $xmlReportPaths"; echo $xmlReportPaths; echo "##vso[task.setvariable variable=xmlReportPaths]$xmlReportPaths"
     displayName: Set new variable value
   - script: |
       echo $(xmlReportPaths)
