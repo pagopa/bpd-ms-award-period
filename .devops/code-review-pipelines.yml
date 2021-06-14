@@ -63,7 +63,7 @@ steps:
       failOnStderr: true
   - task: Bash@3
     displayName: Bash2
-    name: Bash
+    name: Bash2
     inputs:
       targetType: 'inline'
       script: |
