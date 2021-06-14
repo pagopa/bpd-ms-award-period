@@ -62,7 +62,7 @@ steps:
         cd $(System.DefaultWorkingDirectory) | ls -lR
       failOnStderr: true
   - task: Bash@3
-    displayName: Bash
+    displayName: Bash2
     name: Bash
     inputs:
       targetType: 'inline'
