@@ -31,9 +31,7 @@ steps:
       extraProperties: |
         sonar.projectKey=$(SONARCLOUD_PROJECT_KEY)
         sonar.projectName=$(SONARCLOUD_PROJECT_NAME)
-        sonar.exclusions='**/enums/**, **/model/**, **/*Constants*.java, **/*Config.java, **/*Scheduler.java, **/*Application.java, **/*Test.java, **/Dummy*.java'
-        sonar.language='java'
-        sonar.java.coveragePlugin='jacoco'
+        sonar.exclusions='**/enums/**, **/model/**, **/*Constants*, **/*Config.java, **/*Scheduler.java, **/*Application.java, **/*Test.java, **/*Test, **/*TestIntegrated.java, **/*TestIntegrated, **/Dummy*.java'
 #        sonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 #        sonar.junit.reportPaths=target/surefire-reports/
   - task: Maven@3
@@ -50,14 +48,14 @@ steps:
       sonarQubeRunAnalysis: true
       isJacocoCoverageReportXML: true
       sqMavenPluginVersionChoice: 'latest'
-  - task: Bash@3
-    displayName: Bash
-    name: Bash
-    inputs:
-      targetType: 'inline'
-      script: |
-        cd $(System.DefaultWorkingDirectory) | ls -lR
-      failOnStderr: true
+#  - task: Bash@3
+#    displayName: Bash
+#    name: Bash
+#    inputs:
+#      targetType: 'inline'
+#      script: |
+#        cd $(System.DefaultWorkingDirectory) | ls -lR
+#      failOnStderr: true
   - task: SonarCloudPublish@1
     inputs:
       pollingTimeoutSec: '300'
