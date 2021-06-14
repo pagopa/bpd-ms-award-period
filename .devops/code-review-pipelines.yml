@@ -61,14 +61,6 @@ steps:
       script: |
         cd $(System.DefaultWorkingDirectory) | ls -lR
       failOnStderr: true
-  - task: Bash@3
-    displayName: Bash2
-    name: Bash2
-    inputs:
-      targetType: 'inline'
-      script: |
-        cat $(System.DefaultWorkingDirectory)/CCReport43F6D5EF/jacoco.xml
-      failOnStderr: true
   - task: SonarCloudPublish@1
     displayName: 'Publish SonarCloud results on build summary'
     inputs:
