@@ -35,7 +35,8 @@ variables:
   imageRepository: '$(K8S_IMAGE_REPOSITORY_NAME)'
   deployNamespace: '$(DEPLOY_NAMESPACE)'
 
-  isToDeploy: $[and(ne(variables['Build.Reason'], 'PullRequest'), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release'), startsWith(variables['Build.SourceBranch'], 'refs/heads/hotfix')))]
+  isToDeploy: true
+#FIXME  isToDeploy: $[and(ne(variables['Build.Reason'], 'PullRequest'), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release'), startsWith(variables['Build.SourceBranch'], 'refs/heads/hotfix')))]
 
 #FIXME restore if condition to check only release-dev
   ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/release-dev'), eq(variables['Build.SourceBranch'], 'refs/heads/feature/testAppInsight')) }}:
