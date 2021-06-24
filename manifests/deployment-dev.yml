@@ -25,7 +25,7 @@ spec:
             - name: APPLICATIONINSIGHTS_ROLE_NAME
               value: bpdmsawardperiod
             - name: APPLICATIONINSIGHTS_INSTRUMENTATION_LOGGING_LEVEL
-              value: INFO
+              value: OFF
             - name: APPLICATIONINSIGHTS_CONNECTION_STRING
               valueFrom:
                 secretKeyRef:
