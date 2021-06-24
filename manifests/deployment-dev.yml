@@ -19,6 +19,14 @@ spec:
           image: cstardacr.azurecr.io/bpdmsawardperiod
           ports:
             - containerPort: 8080
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: "-javaagent:/applicationinsights-agent-3.1.0.jar"
+            - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: application-insights
+                  key: APPLICATIONINSIGHTS_CONNECTION_STRING
           envFrom:
             - secretRef:
                 name: postgres-credentials
