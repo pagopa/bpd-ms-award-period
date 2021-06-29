@@ -17,6 +17,7 @@ spec:
       containers:
         - name: bpdmsawardperiod
           image: cstardacr.azurecr.io/bpdmsawardperiod
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           envFrom:
