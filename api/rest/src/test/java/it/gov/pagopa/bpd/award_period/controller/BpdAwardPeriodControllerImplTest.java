@@ -3,7 +3,10 @@ package it.gov.pagopa.bpd.award_period.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.sia.meda.config.ArchConfiguration;
+import eu.sia.meda.DummyConfiguration;
+import eu.sia.meda.error.config.LocalErrorConfig;
+import eu.sia.meda.error.handler.MedaExceptionHandler;
+import eu.sia.meda.error.service.impl.LocalErrorManagerServiceImpl;
 import it.gov.pagopa.bpd.award_period.assembler.AwardPeriodResourceAssembler;
 import it.gov.pagopa.bpd.award_period.connector.jpa.model.AwardPeriod;
 import it.gov.pagopa.bpd.award_period.model.AwardPeriodResource;
@@ -12,17 +15,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
@@ -37,14 +42,24 @@ import static org.mockito.Mockito.verify;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {BpdAwardPeriodControllerImpl.class})
-@AutoConfigureMockMvc(secure = false)
-@EnableWebMvc
+@WebMvcTest(value = BpdAwardPeriodControllerImpl.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
+@ContextConfiguration(classes = {
+        BpdAwardPeriodControllerImpl.class,
+        DummyConfiguration.class,
+        MedaExceptionHandler.class,
+        LocalErrorManagerServiceImpl.class
+})
+@Import(LocalErrorConfig.class)
+@TestPropertySource(properties = {
+        "error-manager.enabled=true",
+        "spring.application.name=bpd-ms-award-period-api-rest"
+})
 public class BpdAwardPeriodControllerImplTest {
 
     @Autowired
     protected MockMvc mvc;
-    protected ObjectMapper objectMapper = new ArchConfiguration().objectMapper();
+    @Autowired
+    protected ObjectMapper objectMapper;
 
     @MockBean
     private AwardPeriodService awardPeriodServiceMock;
@@ -77,23 +92,23 @@ public class BpdAwardPeriodControllerImplTest {
     public void find() throws Exception {
         MvcResult result = mvc.perform(MockMvcRequestBuilders
                 .get("/bpd/award-periods/0")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andReturn();
         AwardPeriodResource awardPeriodResource = objectMapper.readValue(result.getResponse().getContentAsString(),
                 AwardPeriodResource.class);
         assertNotNull(awardPeriodResource);
         verify(awardPeriodServiceMock).find(eq(0L));
-        verify(awardPeriodResourceAssemblerMock).toResource(any(AwardPeriod.class),any());
+        verify(awardPeriodResourceAssemblerMock).toResource(any(AwardPeriod.class), any());
     }
 
     @Test
     public void find_nullCase() throws Exception {
         MvcResult result = mvc.perform(MockMvcRequestBuilders
                 .get("/bpd/award-periods/null")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError())
                 .andReturn();
 
@@ -104,8 +119,8 @@ public class BpdAwardPeriodControllerImplTest {
     public void findAll() throws Exception {
         MvcResult result = mvc.perform(MockMvcRequestBuilders
                 .get("/bpd/award-periods")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andReturn();
 
@@ -116,7 +131,7 @@ public class BpdAwardPeriodControllerImplTest {
 
         assertNotNull(awardPeriodResourceList);
         awardPeriodResourceList.forEach(awPeriod -> verify(awardPeriodResourceAssemblerMock)
-                .toResource(any(AwardPeriod.class),any()));
+                .toResource(any(AwardPeriod.class), any()));
 
     }
 
@@ -124,8 +139,8 @@ public class BpdAwardPeriodControllerImplTest {
     public void findActiveAwardPeriods() throws Exception {
         MvcResult result = mvc.perform(MockMvcRequestBuilders
                 .get("/bpd/award-periods/actives")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andReturn();
 
@@ -136,7 +151,7 @@ public class BpdAwardPeriodControllerImplTest {
 
         assertNotNull(awardPeriodResourceList);
         awardPeriodResourceList.forEach(awPeriod -> verify(awardPeriodResourceAssemblerMock)
-                .toResource(any(AwardPeriod.class),any()));
+                .toResource(any(AwardPeriod.class), any()));
 
     }
 

@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/bpd/award-periods")
 public interface BpdAwardPeriodController {
 
-    @GetMapping(value = "/{awardPeriodId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/{awardPeriodId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     AwardPeriodResource find(
             @PathVariable("awardPeriodId")
@@ -28,7 +28,7 @@ public interface BpdAwardPeriodController {
                     Long awardPeriodId
     );
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     List<AwardPeriodResource> findAll(@RequestParam(value = "offsetDateTime", required = false)
                                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime offsetDateTime,
@@ -37,7 +37,7 @@ public interface BpdAwardPeriodController {
     );
 
 
-    @GetMapping(value = "/actives", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/actives", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     List<AwardPeriodResource> findActiveAwardPeriods();
 }
