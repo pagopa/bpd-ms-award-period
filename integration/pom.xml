@@ -4,11 +4,11 @@
     <parent>
         <artifactId>bpd-ms-award-period</artifactId>
         <groupId>it.gov.pagopa.bpd.ms</groupId>
-        <version>1.1.0</version>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
     <groupId>it.gov.pagopa.bpd.ms.award_period</groupId>
     <artifactId>bpd-ms-award-period-integration</artifactId>
-    <version>1.1.0</version>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>jpa</module>
