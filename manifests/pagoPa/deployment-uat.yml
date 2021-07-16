@@ -18,10 +18,13 @@ spec:
     spec:
       containers:
         - name: bpdmsawardperiod
-          image: cstaruatregistry.azurecr.io/bpdmsawardperiod
+          image: cstaruacr.azurecr.io/bpdmsawardperiod
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           envFrom:
+            - secretRef:
+                name: application-insights
             - secretRef:
                 name: postgres-credentials
             - configMapRef:
@@ -58,7 +61,4 @@ spec:
             periodSeconds: 10
             successThreshold: 1
             failureThreshold: 30
-      hostAliases:
-        - hostnames:
-            - bpd-event-uat.servicebus.windows.net
-          ip: 10.70.67.5
+
