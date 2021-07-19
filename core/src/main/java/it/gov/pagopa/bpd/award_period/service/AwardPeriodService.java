@@ -1,6 +1,6 @@
 package it.gov.pagopa.bpd.award_period.service;
 
-import it.gov.pagopa.bpd.award_period.model.AwardPeriodServiceModel;
+import it.gov.pagopa.bpd.award_period.connector.jpa.model.AwardPeriod;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,10 +10,10 @@ import java.util.List;
  */
 public interface AwardPeriodService {
 
-    AwardPeriodServiceModel find(Long awardPeriodId);
+    AwardPeriod find(Long awardPeriodId);
 
-    List<AwardPeriodServiceModel> findAll(LocalDate offsetDate);
+    List<AwardPeriod> findAll(LocalDate offsetDate);
 
-    List<AwardPeriodServiceModel> findActiveAwardPeriods();
+    List<AwardPeriod> findActiveAwardPeriods();
 
 }
