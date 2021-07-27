@@ -4,11 +4,11 @@
     <parent>
     <artifactId>bpd-ms-award-period</artifactId>
     <groupId>it.gov.pagopa.bpd.ms</groupId>
-    <version>cen-383-rc3</version>
+    <version>2.0.0</version>
   </parent>
     <groupId>it.gov.pagopa.bpd.ms.award_period</groupId>
     <artifactId>bpd-ms-award-period-core</artifactId>
-    <version>cen-383-rc3</version>
+    <version>2.0.0</version>
     <dependencies>
         <dependency>
             <groupId>it.gov.pagopa.bpd.ms.award_period.integration</groupId>
