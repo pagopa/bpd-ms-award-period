@@ -20,7 +20,7 @@ import java.time.LocalDate;
 public class AwardPeriod extends BaseEntity implements Serializable {
 
     @Id
-    @SequenceGenerator(name = "id", sequenceName = "bpd_award_period_award_period_id_seq", allocationSize = 10)
+    @SequenceGenerator(name = "id", sequenceName = "bpd_award_period_award_period_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id")
     @Column(name = "award_period_id_n")
     private Long awardPeriodId;
