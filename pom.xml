@@ -12,8 +12,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <bpd-commons.version>2.0.1
-        </bpd-commons.version>
+        <bpd-commons.version>2.0.1</bpd-commons.version>
     </properties>
 
     <dependencyManagement>
